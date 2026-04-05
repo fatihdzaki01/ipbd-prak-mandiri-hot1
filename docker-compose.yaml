@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres-ipbd
+    restart: always
+
+    environment:
+      POSTGRES_USER: postgres-ipbd
+      POSTGRES_PASSWORD: 43210
+      POSTGRES_DB: ipbd_db_tugasprak1
+
+    ports:
+      - "5436:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres-ipbd"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
